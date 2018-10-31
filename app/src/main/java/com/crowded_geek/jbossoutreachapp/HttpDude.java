@@ -16,10 +16,6 @@ public class HttpDude {
         //To be used for logging
         private static final String TAG = HttpDude.class.getSimpleName();
 
-        public HttpDude() {
-
-        }
-
         public String makeServiceCall(String reqUrl) {
             String response = null;
             try {
