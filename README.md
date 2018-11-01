@@ -7,3 +7,8 @@ View the
 - com.android.support:cardview-v7:27.1.1
 ## External Libraries Used
 No external libraries were used.
+
+## Changes Log
+### Log 0.0.2:
+-Removed ActionBar
+-Removed CardView for list items
