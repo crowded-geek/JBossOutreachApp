@@ -6,72 +6,56 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.crowded_geek.jbossoutreachapp.model.Contributor;
+import com.crowded_geek.jbossoutreachapp.util.ItemArrayAdapter;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class MainActivity extends AppCompatActivity {
+public class ContributorsActivity extends AppCompatActivity {
 
+    Intent data;
+    String repo;
     private String TAG = MainActivity.class.getSimpleName();
     private ProgressDialog pDialog;
     private ListView lv;
 
-    // URL to get repos JSON
-    private static String url = "https://api.github.com/orgs/JBossOutreach/repos";
+    // URL to get contributors JSON
+    private static String url;
 
-    ArrayList<HashMap<String, String>> repos;
-
+    static ArrayList<Contributor> contributors;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        //checking if internet is available
-        try{
-            if(!isConnected()){
-                Toast.makeText(this, "Internet connection needed!", Toast.LENGTH_SHORT).show();
-                finish();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        setContentView(R.layout.activity_contributors);
+        contributors = new ArrayList<>();
+        data = getIntent();
+        repo = data.getStringExtra("rep_name");
+        url = "https://api.github.com/repos/JBossOutreach/"+repo+"/contributors";
+        lv = (ListView) findViewById(R.id.contributors);
+        ItemArrayAdapter itemArrayAdapter = new ItemArrayAdapter(ContributorsActivity.this, R.layout.contrib_list_item, contributors);
+        lv.setAdapter(itemArrayAdapter);
+        new GetContributors().execute();
 
-        repos = new ArrayList<>();
-        lv = (ListView) findViewById(R.id.repoList);
-        new GetRepos().execute();
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent i = new Intent(MainActivity.this, ContributorsActivity.class);
-                String repName = repos.get(position).get("name");
-                i.putExtra("rep_name", repName);
-                startActivity(i);
-            }
-        });
     }
 
-    public boolean isConnected() throws InterruptedException, IOException {
-        final String command = "ping -i 5 -c 1 google.com";
-        return Runtime.getRuntime().exec(command).waitFor() == 0;
-    }
-
-    private class GetRepos extends AsyncTask<Void, Void, Void> {
+    private class GetContributors extends AsyncTask<Void, Void, Void> {
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             // Showing progress dialog
-            pDialog = new ProgressDialog(MainActivity.this);
+            pDialog = new ProgressDialog(ContributorsActivity.this);
             pDialog.setMessage("Loading...");
             pDialog.setCancelable(false);
             pDialog.show();
@@ -95,20 +79,16 @@ public class MainActivity extends AppCompatActivity {
                     for (int i = 0; i < reps.length(); i++) {
                         JSONObject c = reps.getJSONObject(i);
 
-                        String name = c.getString("name");
-                        String description = c.getString("description");
-                        if(description=="null"){
-                            description="No Description provided";
-                        }
-                        // tmp hash map for single repo
-                        HashMap<String, String> repo = new HashMap<>();
-
-                        // adding each child node to HashMap key => value
-                        repo.put("name", name);
-                        repo.put("description", description);
+                        String avatarUrl = c.getString("avatar_url");
+                        String name = c.getString("login");
+                        int commits = c.getInt("contributions");
+                        Contributor contibutor = new Contributor();
+                        contibutor.setAvatarUrl(avatarUrl);
+                        contibutor.setName(name);
+                        contibutor.setContibutions(commits);
 
                         // adding repo to repos list
-                        repos.add(repo);
+                        contributors.add(contibutor);
                     }
                 } catch (final JSONException e) {
                     Log.e(TAG, "Json parsing error: " + e.getMessage());
@@ -149,12 +129,8 @@ public class MainActivity extends AppCompatActivity {
             /**
              * Updating parsed JSON data into ListView
              * */
-            ListAdapter adapter = new SimpleAdapter(
-                    MainActivity.this, repos,
-                    R.layout.rep_list_item, new String[]{"name", "description"}, new int[]{R.id.repName,
-                    R.id.repDesc});
-
-            lv.setAdapter(adapter);
+            ItemArrayAdapter itemArrayAdapter = new ItemArrayAdapter(ContributorsActivity.this, R.layout.contrib_list_item, contributors);
+            lv.setAdapter(itemArrayAdapter);
         }
 
     }

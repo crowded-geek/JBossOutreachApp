@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
-
-        <TextView
+    <TextView
             android:id="@+id/repName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -12,8 +10,7 @@
             android:layout_marginTop="5dp"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
             android:textColor="@color/colorPrimary"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textSize="18sp" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -25,4 +22,4 @@
             android:layout_marginBottom="5dp"
             android:maxLines="2"
             android:textStyle="italic"/>
-</RelativeLayout>
+    </RelativeLayout>
