@@ -1,5 +1,5 @@
 # JBossOutreachApp
-App made for a GCI'18 task fro JBoss Organization! :)
+App made for a GCI'18 task for JBoss Organization! :)
 View the 
 [YouTube](https://www.youtube.com/watch?v=sR3DItTuTZ0) video
 ## Internal Libraries Used
