@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#fff"
     tools:context=".ContributorsActivity">
     <TextView
         android:id="@+id/tv_cont"
@@ -13,13 +14,70 @@
         android:textSize="36sp"
         android:layout_marginTop="15dp"
         android:layout_centerHorizontal="true"/>
-<ListView
-    android:id="@+id/contributors"
-    android:layout_below="@id/tv_cont"
-    android:layout_marginTop="10dp"
+<RelativeLayout
+    android:id="@+id/leads"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:layout_below="@id/tv_cont">
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/lead2"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="34dp"
+        android:src="@drawable/ic_launcher_background"
+        android:layout_marginLeft="71dp"/>
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/lead1"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/ic_launcher_background"
+        android:layout_marginLeft="154dp"/>
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/lead3"
+        android:layout_width="33dp"
+        android:layout_height="33dp"
+        android:layout_marginTop="43dp"
+        android:src="@drawable/ic_launcher_background"
+        android:layout_marginLeft="255dp"/>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:src="@drawable/leadboard"/>
+    <TextView
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:text="2"
+        android:textAlignment="center"
+        android:layout_marginTop="90dp"
+        android:textSize="18sp"
+        android:layout_marginLeft="72dp"
+        android:background="#fff"/>
+    <TextView
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:text="1"
+        android:textAlignment="center"
+        android:layout_marginTop="97dp"
+        android:textSize="18sp"
+        android:layout_marginLeft="162dp"
+        android:background="#fff"/>
+    <TextView
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:text="3"
+        android:textAlignment="center"
+        android:layout_marginTop="90dp"
+        android:textSize="18sp"
+        android:layout_marginLeft="253dp"
+        android:background="#fff"/>
+</RelativeLayout>
 
-</ListView>
+    <ListView
+        android:id="@+id/contributors"
+        android:layout_below="@id/leads"
+        android:layout_marginTop="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 </RelativeLayout>
