@@ -34,9 +34,9 @@ public class ItemArrayAdapter extends ArrayAdapter<Contributor> {
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(listItemLayout, parent, false);
 
-            viewHolder.avatar = (ImageView) convertView.findViewById(R.id.c_avatar);
-            viewHolder.name = (TextView) convertView.findViewById(R.id.c_name);
-            viewHolder.commits = (TextView) convertView.findViewById(R.id.n_commits);
+            viewHolder.avatar = convertView.findViewById(R.id.c_avatar);
+            viewHolder.name = convertView.findViewById(R.id.c_name);
+            viewHolder.commits = convertView.findViewById(R.id.n_commits);
 
             convertView.setTag(viewHolder); // view lookup cache stored in tag
         } else {

@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -22,6 +23,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class ContributorsActivity extends AppCompatActivity {
 
     Intent data;
@@ -29,7 +32,7 @@ public class ContributorsActivity extends AppCompatActivity {
     private String TAG = MainActivity.class.getSimpleName();
     private ProgressDialog pDialog;
     private ListView lv;
-
+    private CircleImageView lead1, lead2, lead3;
     // URL to get contributors JSON
     private static String url;
 
@@ -43,6 +46,11 @@ public class ContributorsActivity extends AppCompatActivity {
         repo = data.getStringExtra("rep_name");
         url = "https://api.github.com/repos/JBossOutreach/"+repo+"/contributors";
         lv = (ListView) findViewById(R.id.contributors);
+
+        lead1 = findViewById(R.id.lead1);
+        lead2 = findViewById(R.id.lead2);
+        lead3 = findViewById(R.id.lead3);
+
         ItemArrayAdapter itemArrayAdapter = new ItemArrayAdapter(ContributorsActivity.this, R.layout.contrib_list_item, contributors);
         lv.setAdapter(itemArrayAdapter);
         new GetContributors().execute();
@@ -86,7 +94,6 @@ public class ContributorsActivity extends AppCompatActivity {
                         contibutor.setAvatarUrl(avatarUrl);
                         contibutor.setName(name);
                         contibutor.setContibutions(commits);
-
                         // adding repo to repos list
                         contributors.add(contibutor);
                     }
@@ -131,6 +138,9 @@ public class ContributorsActivity extends AppCompatActivity {
              * */
             ItemArrayAdapter itemArrayAdapter = new ItemArrayAdapter(ContributorsActivity.this, R.layout.contrib_list_item, contributors);
             lv.setAdapter(itemArrayAdapter);
+            Glide.with(ContributorsActivity.this).load(contributors.get(0).getAvatarUrl()).into(lead1);
+            Glide.with(ContributorsActivity.this).load(contributors.get(1).getAvatarUrl()).into(lead2);
+            Glide.with(ContributorsActivity.this).load(contributors.get(2).getAvatarUrl()).into(lead3);
         }
 
     }
