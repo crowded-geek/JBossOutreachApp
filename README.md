@@ -20,3 +20,5 @@ View the
 - Updated the Youtube video link
 - Added Contributors Activity
 - Added 2 new external libraries
+
+Google Code-in and the Google Code-in logo are trademarks of Google Inc.
